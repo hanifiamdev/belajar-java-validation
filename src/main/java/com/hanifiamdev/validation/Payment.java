@@ -2,6 +2,7 @@ package com.hanifiamdev.validation;
 
 import com.hanifiamdev.validation.group.CreditCardPaymentGroup;
 import com.hanifiamdev.validation.group.VirtualAccountPaymentGroup;
+import com.hanifiamdev.validation.payload.EmailErrorPayload;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,8 @@ public class Payment {
             message = "amount can not null")
     private Long amount;
 
-    @LuhnCheck(groups = {CreditCardPaymentGroup.class}, message = "invalid credit card number")
+    @LuhnCheck(groups = {CreditCardPaymentGroup.class}, message = "invalid credit card number",
+    payload = {EmailErrorPayload.class})
     @NotBlank(groups = {CreditCardPaymentGroup.class}, message = "credit card can not blank")
     private String creditCard;
 
@@ -30,7 +32,7 @@ public class Payment {
     private String virtualAccount;
 
     @Valid
-    @NotBlank(groups = {VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class}, message = "customer can not null")
+    @NotNull(groups = {VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class}, message = "customer can not null")
     @ConvertGroup(from= VirtualAccountPaymentGroup.class, to = Default.class)
     @ConvertGroup(from = CreditCardPaymentGroup.class, to = Default.class)
     private Customer customer;
