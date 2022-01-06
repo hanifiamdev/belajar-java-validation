@@ -6,6 +6,7 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -13,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(
         validatedBy = {CheckCaseValidator.class}
 )
-@Target( FIELD)
+@Target( {FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 public @interface CheckCase {
 

@@ -1,14 +1,12 @@
 package com.hanifiamdev.validation;
 
-import com.hanifiamdev.validation.constraint.CheckCase;
-import com.hanifiamdev.validation.enums.CaseMode;
+import com.hanifiamdev.validation.constraint.CheckOrderId;
 import com.hanifiamdev.validation.group.CreditCardPaymentGroup;
 import com.hanifiamdev.validation.group.VirtualAccountPaymentGroup;
 import com.hanifiamdev.validation.payload.EmailErrorPayload;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.LuhnCheck;
@@ -16,11 +14,8 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
-    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
-    mode = CaseMode.UPPER, message = "{order.id.upper}")
-    @NotBlank(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
-            message = "{order.id.notblank}")
-    @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class}, min = 1, max = 10, message = "{order.id.size}")
+    @CheckOrderId(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+    message = "{order.id.invalid}")
     private String orderId;
 
     @Range(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
