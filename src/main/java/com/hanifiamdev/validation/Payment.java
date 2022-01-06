@@ -1,5 +1,7 @@
 package com.hanifiamdev.validation;
 
+import com.hanifiamdev.validation.constraint.CheckCase;
+import com.hanifiamdev.validation.enums.CaseMode;
 import com.hanifiamdev.validation.group.CreditCardPaymentGroup;
 import com.hanifiamdev.validation.group.VirtualAccountPaymentGroup;
 import com.hanifiamdev.validation.payload.EmailErrorPayload;
@@ -14,6 +16,8 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
+    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+    mode = CaseMode.UPPER, message = "{order.id.upper}")
     @NotBlank(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
             message = "{order.id.notblank}")
     @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class}, min = 1, max = 10, message = "{order.id.size}")
